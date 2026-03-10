@@ -1,0 +1,13 @@
+#To prevent Git from tracking build files and temporary files.
+
+#Build folders
+bin/
+obj/
+
+#VS Code settings
+.vscode/
+
+#User-specific files
+*.user
+*.log
+*.db
