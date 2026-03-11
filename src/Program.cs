@@ -1,12 +1,26 @@
-﻿using BankingTransactionSystem.Models;
+﻿using BankingTransactionSystem.Data;
+using MySql.Data.MySqlClient;
 
-Account account = new Account
+namespace BankingTransactionSystem
 {
-    AccountNumber = 1,
-    Login = "testUser",
-    PinCode = 12345,
-    HolderName = "Test User",
-    Balance = 1000
-};
+    public class Program
+    {
+        public static void Main(string[] args)
+        {
+            try
+            {
+                DatabaseConfig databaseConfig = new DatabaseConfig();
 
-Console.WriteLine($"Account created for {account.HolderName}");
+                using MySqlConnection connection = databaseConfig.GetConnection();
+                connection.Open();
+
+                Console.WriteLine("Database connection successful.");
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("Database connection failed.");
+                Console.WriteLine($"Error: {ex.Message}");
+            }
+        }
+    }
+}
