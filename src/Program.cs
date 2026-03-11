@@ -1,4 +1,4 @@
-﻿using BankingTransactionSystem.Data;
+﻿using BankingTransactionSystem.Services;
 using BankingTransactionSystem.Models;
 
 namespace BankingTransactionSystem
@@ -13,9 +13,9 @@ namespace BankingTransactionSystem
             Console.Write("Enter PIN: ");
             int pin = int.Parse(Console.ReadLine() ?? "0");
 
-            AccountRepository repository = new AccountRepository();
+            AuthService authService = new AuthService();
 
-            Account? account = repository.GetAccountByLoginAndPin(login, pin);
+            Account? account = authService.Login(login, pin);
 
             if (account != null)
             {
