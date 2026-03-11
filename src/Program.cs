@@ -1,5 +1,5 @@
 ﻿using BankingTransactionSystem.Data;
-using MySql.Data.MySqlClient;
+using BankingTransactionSystem.Models;
 
 namespace BankingTransactionSystem
 {
@@ -7,19 +7,27 @@ namespace BankingTransactionSystem
     {
         public static void Main(string[] args)
         {
-            try
+            Console.Write("Enter login: ");
+            string login = Console.ReadLine() ?? "";
+
+            Console.Write("Enter PIN: ");
+            int pin = int.Parse(Console.ReadLine() ?? "0");
+
+            AccountRepository repository = new AccountRepository();
+
+            Account? account = repository.GetAccountByLoginAndPin(login, pin);
+
+            if (account != null)
             {
-                DatabaseConfig databaseConfig = new DatabaseConfig();
-
-                using MySqlConnection connection = databaseConfig.GetConnection();
-                connection.Open();
-
-                Console.WriteLine("Database connection successful.");
+                Console.WriteLine("\nLogin successful!");
+                Console.WriteLine($"Account #: {account.AccountNumber}");
+                Console.WriteLine($"Holder: {account.HolderName}");
+                Console.WriteLine($"Balance: {account.Balance}");
+                Console.WriteLine($"Role: {account.Role}");
             }
-            catch (Exception ex)
+            else
             {
-                Console.WriteLine("Database connection failed.");
-                Console.WriteLine($"Error: {ex.Message}");
+                Console.WriteLine("\nInvalid login or PIN.");
             }
         }
     }
