@@ -23,7 +23,11 @@ namespace BankingTransactionSystem.UI
             string login = Console.ReadLine() ?? string.Empty;
 
             Console.Write("Enter PIN code: ");
-            int pinCode = int.Parse(Console.ReadLine() ?? "0");
+            if (!int.TryParse(Console.ReadLine(), out int pinCode))
+            {
+                Console.WriteLine("Invalid PIN format.");
+                return;
+            }
 
             Account? account = _authService.Login(login, pinCode);
 
@@ -65,17 +69,25 @@ namespace BankingTransactionSystem.UI
                 if (choice == "1")
                 {
                     Console.Write("Enter withdrawal amount: ");
-                    decimal amount = decimal.Parse(Console.ReadLine() ?? "0");
-
-                    bool success = _transactionService.Withdraw(account.AccountNumber, amount, out string message);
+                    if (!decimal.TryParse(Console.ReadLine(), out decimal amount))
+                    {
+                        Console.WriteLine("Invalid amount.");
+                        continue;
+                    }
+                   
+                    _transactionService.Withdraw(account.AccountNumber, amount, out string message);
                     Console.WriteLine(message);
                 }
                 else if (choice == "2")
                 {
                     Console.Write("Enter deposit amount: ");
-                    decimal amount = decimal.Parse(Console.ReadLine() ?? "0");
+                    if (!decimal.TryParse(Console.ReadLine(), out decimal amount))
+                    {
+                        Console.WriteLine("Invalid amount.");
+                        continue;
+                    }
 
-                    bool success = _transactionService.Deposit(account.AccountNumber, amount, out string message);
+                    _transactionService.Deposit(account.AccountNumber, amount, out string message);
                     Console.WriteLine(message);
                 }
                 else if (choice == "3")
@@ -105,12 +117,44 @@ namespace BankingTransactionSystem.UI
 
         private void ShowAdminMenu(Account account)
         {
-            Console.WriteLine($"\nWelcome, {account.HolderName}!");
-            Console.WriteLine("1. Create New Account");
-            Console.WriteLine("2. Delete Existing Account");
-            Console.WriteLine("3. Update Account Information");
-            Console.WriteLine("4. Search for Account");
-            Console.WriteLine("5. Exit");
+            while (true)
+            {
+                Console.WriteLine($"\nWelcome, {account.HolderName}!");
+                Console.WriteLine("1. Create New Account");
+                Console.WriteLine("2. Delete Existing Account");
+                Console.WriteLine("3. Update Account Information");
+                Console.WriteLine("4. Search for Account");
+                Console.WriteLine("5. Exit");
+
+                Console.Write("Select an option: ");
+                string choice = Console.ReadLine() ?? string.Empty;
+
+                if (choice == "1")
+                {
+                    Console.WriteLine("Create account logic here");
+                }
+                else if (choice == "2")
+                {
+                    Console.WriteLine("Delete account logic here");
+                }
+                else if (choice == "3")
+                {
+                    Console.WriteLine("Update account logic here");
+                }
+                else if (choice == "4")
+                {
+                    Console.WriteLine("Search account logic here");
+                }
+                else if (choice == "5")
+                {
+                    Console.WriteLine("Goodbye.");
+                    break;
+                }
+                else
+                {
+                    Console.WriteLine("Invalid option.");
+                }
+            }
         }
     }
 }
