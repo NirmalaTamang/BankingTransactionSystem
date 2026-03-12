@@ -13,7 +13,8 @@ namespace BankingTransactionSystem.Data
                 .AddJsonFile("appsettings.json")
                 .Build();
 
-            _connectionString = configuration.GetConnectionString("DefaultConnection");
+            _connectionString = configuration.GetConnectionString("DefaultConnection")
+                ?? throw new InvalidOperationException("Connection string not found.");
          
         }
 
