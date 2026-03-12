@@ -87,5 +87,68 @@ namespace BankingTransactionSystem.Data
             return rowsAffected > 0;
         }
 
+        public int CreateAccount(Account account)
+        {
+            using MySqlConnection connection = _databaseConfig.GetConnection();
+            connection.Open();
+
+            string query = @"INSERT INTO accounts (login, pin_code, holder_name, balance, status, role)
+                            VALUES (@login, @pinCode, @holderName, @balance, @status, @role);
+                            SELECT LAST_INSERT_ID();";
+
+            using MySqlCommand command = new MySqlCommand(query, connection);
+            command.Parameters.AddWithValue("@login", account.Login);
+            command.Parameters.AddWithValue("@pinCode", account.PinCode);
+            command.Parameters.AddWithValue("@holderName", account.HolderName);
+            command.Parameters.AddWithValue("@balance", account.Balance);
+            command.Parameters.AddWithValue("@status", account.Status);
+            command.Parameters.AddWithValue("@role", account.Role);
+
+            object result = command.ExecuteScalar()!;
+            return Convert.ToInt32(result);
+        }
+
+    
+        public bool DeleteAccount(int accountNumber)
+        {
+            using MySqlConnection connection = _databaseConfig.GetConnection();
+            connection.Open();
+
+            string query = "DELETE FROM accounts WHERE account_number = @accountNumber";
+
+            using MySqlCommand command = new MySqlCommand(query, connection);
+            command.Parameters.AddWithValue("@accountNumber", accountNumber);
+
+            int rowsAffected = command.ExecuteNonQuery();
+            return rowsAffected > 0;
+        }
+
+        public bool UpdateAccount(Account account)
+        {
+            using MySqlConnection connection = _databaseConfig.GetConnection();
+            connection.Open();
+
+            string query = @"UPDATE accounts
+                            SET login = @login,
+                                pin_code = @pinCode,
+                                holder_name = @holderName,
+                                balance = @balance,
+                                status = @status,
+                                role = @role
+                            WHERE account_number = @accountNumber";
+
+            using MySqlCommand command = new MySqlCommand(query, connection);
+            command.Parameters.AddWithValue("@login", account.Login);
+            command.Parameters.AddWithValue("@pinCode", account.PinCode);
+            command.Parameters.AddWithValue("@holderName", account.HolderName);
+            command.Parameters.AddWithValue("@balance", account.Balance);
+            command.Parameters.AddWithValue("@status", account.Status);
+            command.Parameters.AddWithValue("@role", account.Role);
+            command.Parameters.AddWithValue("@accountNumber", account.AccountNumber);
+
+            int rowsAffected = command.ExecuteNonQuery();
+            return rowsAffected > 0;
+        }
+
     }
 }
