@@ -1,11 +1,42 @@
-#To prevent Git from tracking build files and temporary files.
+﻿#To prevent Git from tracking build files and temporary files.
 
 #Build folders
 bin/
 obj/
 
+# Visual Studio files
+.vs/
+*.user
+*.suo
+*.userosscache
+*.sln.docstates
+
+# Rider IDE
+.idea/
+
 #VS Code settings
 .vscode/
+
+# dotnet
+*.dll
+*.exe
+*.pdb
+*.cache
+
+# NuGet
+*.nupkg
+packages/
+project.lock.json
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Test results
+TestResults/
+coverage/
+*.trx
+*.coveragexml
 
 #User-specific files
 *.user

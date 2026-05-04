@@ -1,20 +1,20 @@
-using BankingTransactionSystem.Data;
+﻿using BankingTransactionSystem.Data;
+using BankingTransactionSystem.Interfaces;
 using BankingTransactionSystem.Models;
 
-namespace BankingTransactionSystem.Services
+namespace BankingTransactionSystem.Services;
+
+public class AuthService : IAuthService
 {
-    public class AuthService
+    private readonly IAccountRepository _accountRepository;
+
+    public AuthService(IAccountRepository accountRepository)
     {
-        private readonly AccountRepository _accountRepository;
+        _accountRepository = accountRepository;
+    }
 
-        public AuthService()
-        {
-            _accountRepository = new AccountRepository();
-        }
-
-        public Account? Login(string login, int pinCode)
-        {
-            return _accountRepository.GetAccountByLoginAndPin(login, pinCode);
-        }
+    public Account? Login(string login, int pinCode)
+    {
+        return _accountRepository.GetAccountByLoginAndPin(login, pinCode);
     }
 }

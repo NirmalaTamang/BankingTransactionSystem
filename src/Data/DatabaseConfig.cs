@@ -1,5 +1,5 @@
+﻿using Microsoft.Extensions.Configuration;
 using MySql.Data.MySqlClient;
-using Microsoft.Extensions.Configuration;
 
 namespace BankingTransactionSystem.Data
 {
@@ -15,7 +15,6 @@ namespace BankingTransactionSystem.Data
 
             _connectionString = configuration.GetConnectionString("DefaultConnection")
                 ?? throw new InvalidOperationException("Connection string not found.");
-         
         }
 
         public MySqlConnection GetConnection()

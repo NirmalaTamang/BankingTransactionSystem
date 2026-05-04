@@ -1,4 +1,4 @@
-namespace BankingTransactionSystem.UI
+﻿namespace BankingTransactionSystem.UI
 {
     public static class ConsoleUtils
     {
