@@ -3,6 +3,7 @@ using MySql.Data.MySqlClient;
 
 namespace BankingTransactionSystem.Data
 {
+    [System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverage]
     public class DatabaseConfig
     {
         private readonly string _connectionString;

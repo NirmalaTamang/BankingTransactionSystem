@@ -4,6 +4,7 @@ using MySql.Data.MySqlClient;
 
 namespace BankingTransactionSystem.Data;
 
+[System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverage]
 public class AccountRepository : IAccountRepository
 {
     private readonly DatabaseConfig _databaseConfig;

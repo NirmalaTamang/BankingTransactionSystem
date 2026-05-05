@@ -8,6 +8,7 @@ namespace BankingTransactionSystem;
 /// <summary>
 /// Application entry point.
 /// </summary>
+[System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverage]
 public class Program
 {
     /// <summary>

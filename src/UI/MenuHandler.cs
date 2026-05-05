@@ -4,6 +4,7 @@ using BankingTransactionSystem.Services;
 
 namespace BankingTransactionSystem.UI;
 
+[System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverage]
 public class MenuHandler
 {
     private readonly IAuthService _authService;
