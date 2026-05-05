@@ -1,0 +1,40 @@
+﻿name: CI
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  build-and-test:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: '9.0.x'
+
+      - name: Restore dependencies
+        run: dotnet restore
+
+      - name: Build Debug
+        run: dotnet build --no-restore --configuration Debug
+
+      - name: Build Release
+        run: dotnet build --no-restore --configuration Release
+
+      - name: Run tests with coverage
+        run: dotnet test --no-build --collect:"XPlat Code Coverage"
+
+      - name: Upload coverage to Codecov
+        uses: codecov/codecov-action@v4
+        with:
+          token: ${{ secrets.CODECOV_TOKEN }}
+          files: tests/BankingTransactionSystem.Tests/TestResults/**/coverage.cobertura.xml
+          fail_ci_if_error: true
+
